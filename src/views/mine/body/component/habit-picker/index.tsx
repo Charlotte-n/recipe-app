@@ -6,14 +6,15 @@ import { Dialog, Icon } from '@rneui/themed'
 import { log } from 'expo/build/devtools/logger'
 interface IProps {
     children?: ReactNode
-    sex: number
-    setSex: (value: string) => void
+    habit: any
+    setHabit: any
 }
 
-const SexPicker: FC<IProps> = ({ sex, setSex }) => {
+const HabitPicker: FC<IProps> = ({ habit, setHabit }) => {
     const [isShow, setIsShow] = useState(false)
     //进行联动
-    const selected = useRef(String(sex))
+    const selected = useRef(habit)
+
     return (
         <TouchableOpacity
             className="flex-row items-center border-[#F1F3F4] border-b"
@@ -26,17 +27,11 @@ const SexPicker: FC<IProps> = ({ sex, setSex }) => {
                 className="flex-1"
                 style={{ fontSize: 15, fontWeight: '300' }}
             >
-                性别
+                运动习惯
             </Text>
             <View className="flex-row items-center">
                 <Text style={{ fontSize: 15, fontWeight: '300' }}>
-                    {selected.current
-                        ? selected.current === '0'
-                            ? '男'
-                            : '女'
-                        : String(sex) === '0'
-                          ? '男'
-                          : '女'}
+                    {selected.current ? selected.current : habit ? habit : ''}
                 </Text>
                 <Icon
                     type={'antdesign'}
@@ -50,40 +45,39 @@ const SexPicker: FC<IProps> = ({ sex, setSex }) => {
                 ></Icon>
             </View>
             <Dialog isVisible={isShow}>
-                <Dialog.Title title={'修改性别'}></Dialog.Title>
+                <Dialog.Title title={'运动习惯'}></Dialog.Title>
                 <TouchableOpacity
                     onPress={() => {
                         setIsShow(false)
-                        selected.current = '0'
-                        console.log('我当前的性别', selected.current)
-                        setSex(selected.current)
+                        selected.current = '久坐不动'
+                        setHabit(selected.current)
                     }}
                 >
                     <View>
                         <Text
                             style={{
                                 height: 40,
-                                fontSize: 18,
+                                fontSize: 16,
                             }}
                         >
-                            男
+                            久坐不动
                         </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         setIsShow(false)
-                        selected.current = '1'
-                        setSex(selected.current)
+                        selected.current = '喜欢健身'
+                        setHabit(selected.current)
                     }}
                 >
                     <Text
                         style={{
                             height: 40,
-                            fontSize: 18,
+                            fontSize: 16,
                         }}
                     >
-                        女
+                        喜欢健身
                     </Text>
                 </TouchableOpacity>
             </Dialog>
@@ -91,4 +85,4 @@ const SexPicker: FC<IProps> = ({ sex, setSex }) => {
     )
 }
 
-export default memo(SexPicker)
+export default memo(HabitPicker)

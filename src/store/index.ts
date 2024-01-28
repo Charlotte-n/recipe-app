@@ -15,7 +15,7 @@ import {
 const persistConfig = {
     key: 'userInfo',
     storage: AsyncStorage,
-    whitelist: ['userInfo', 'token'],
+    whitelist: [],
 }
 const LoginStorePersist = persistReducer(persistConfig, LoginRegisterSlice)
 

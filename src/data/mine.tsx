@@ -2,7 +2,6 @@ import { Icon } from '@rneui/themed'
 import store from '../store'
 const userInfo = store.getState().LoginRegisterSlice.userInfo
 const { username } = userInfo
-console.log(username)
 const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -32,22 +31,5 @@ const DATA = [
 ]
 
 //个人资料
-const profileData = [
-    {
-        left: '用户名',
-        right: username,
-    },
-    {
-        left: '绑定手机',
-        right: 1338302739,
-    },
-    {
-        left: '绑定邮箱',
-        right: '已绑定',
-    },
-    {
-        left: '用户协议',
-        right: <Icon name={'right'} type={'antdesign'}></Icon>,
-    },
-]
-export { DATA, profileData }
+
+export { DATA }

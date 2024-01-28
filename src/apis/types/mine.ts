@@ -10,7 +10,13 @@ export interface User {
     password: string
     email: string
     status: number
-    phone: any
+    phone: number
+    height: string
+    weight: string
+    avatar: string
+    sex: number
+    birth: number[]
+    habit: string
 }
 
 //endregion

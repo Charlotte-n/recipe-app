@@ -7,7 +7,7 @@ import { MainTheme } from '../../../styles/theme/ui-theme'
 import { useAppSelector } from '../../../store'
 import { shallowEqual } from 'react-redux'
 import { StackActions } from '@react-navigation/native'
-import { Dimensions ,StatusBar} from 'react-native'
+import { Dimensions, StatusBar } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 
 interface IProps {
@@ -23,25 +23,30 @@ const LoginHome: FC<IProps> = ({ navigation }) => {
     }, shallowEqual)
 
     return (
-        <SafeAreaView className="flex-1">
+        <ScrollView
+            className="flex-1"
+            style={{ backgroundColor: theme.colors.primary }}
+        >
             <StatusBar backgroundColor={theme.colors.primary}></StatusBar>
             <View
                 style={{
                     width: '100%',
-                    height: Dimensions.get('screen').height /1.5,
+                    height: Dimensions.get('screen').height / 1.5,
                 }}
             >
                 <Image
                     source={require('../../../../assets/images/bg_welcome_header.png')}
-                    style={{ width: '100%', height: '100%' }}
+                    style={{
+                        width: Dimensions.get('window').width,
+                        height: Dimensions.get('screen').height / 1.5,
+                    }}
                     resizeMode={'cover'}
                 ></Image>
             </View>
             <View
                 style={{
-                    backgroundColor: theme.colors.primary,
-                    height: Dimensions.get('screen').height ,
                     alignItems: 'center',
+                    paddingVertical: 3,
                 }}
             >
                 <ThemeProvider theme={MainTheme}>
@@ -88,7 +93,7 @@ const LoginHome: FC<IProps> = ({ navigation }) => {
                     ></Button>
                 </ThemeProvider>
             </View>
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 

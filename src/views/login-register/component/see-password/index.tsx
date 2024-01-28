@@ -1,11 +1,48 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import type { FC, ReactNode } from 'react'
+import { TouchableOpacity, View } from 'react-native'
+import { Icon } from '@rneui/themed'
+import theme from '../../../../styles/theme/color'
+
 interface IProps {
-  children?: ReactNode
+    children?: ReactNode
+    getIsSee: (value: boolean) => void
 }
 
-const Discover: FC<IProps> = () => {
-  return <div>discover</div>
+const SeePassWord: FC<IProps> = ({ getIsSee }) => {
+    const [isSeePassWord, setIsSeePassWord] = useState<boolean>(false)
+    const close = () => {
+        setIsSeePassWord(!isSeePassWord)
+    }
+    const open = () => {
+        setIsSeePassWord(!isSeePassWord)
+    }
+    useEffect(() => {
+        getIsSee(isSeePassWord)
+    }, [isSeePassWord])
+    const See = () => {
+        return (
+            <TouchableOpacity onPress={() => close()}>
+                <Icon
+                    name={'eye'}
+                    type={'feather'}
+                    color={theme.colors.deep01Primary}
+                ></Icon>
+            </TouchableOpacity>
+        )
+    }
+    const Off = () => {
+        return (
+            <TouchableOpacity onPress={() => open()}>
+                <Icon
+                    name={'eye-off'}
+                    type={'feather'}
+                    color={theme.colors.deep01Primary}
+                ></Icon>
+            </TouchableOpacity>
+        )
+    }
+    return <View>{isSeePassWord ? <See /> : <Off />}</View>
 }
 
-export default memo(Discover)
+export default memo(SeePassWord)

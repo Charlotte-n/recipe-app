@@ -1,12 +1,6 @@
 import React, { memo, useRef, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import {
-    Text,
-    View,
-    Image,
-    ScrollView,
-    KeyboardAvoidingView,
-} from 'nativewind/dist/preflight'
+import { Text, View, Image, ScrollView } from 'nativewind/dist/preflight'
 import { Button, Icon, Input } from '@rneui/themed'
 import {
     StyleSheet,
@@ -22,6 +16,7 @@ import theme from '../../../styles/theme/color'
 import { getCodeApi, verifyCodeApi } from '../../../apis/mine'
 import SafeAreaView from 'react-native-safe-area-view'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import SeePassWord from '../component/see-password'
 
 interface IProps {
     children?: ReactNode
@@ -42,10 +37,18 @@ const Register: FC<IProps> = ({ navigation }) => {
     const twicepasswordInput = useRef<any>()
     const [veriyCode, setVeriyCode] = useState('')
     const [isVerifyCode, setIsVerifyCode] = useState(true)
+    const [isSee, setIsSee] = useState<boolean>()
+    const [isTwiceSee, setIsTwiceSee] = useState<boolean>()
     const getTime = (value: string | number) => {
         if (value == 0) {
             setCode(false)
         }
+    }
+    const getIsSee = (value: boolean) => {
+        setIsSee(value)
+    }
+    const getIsTwiceSee = (value: boolean) => {
+        setIsTwiceSee(value)
     }
     //校验邮箱是否正确
     const verifyEmailRule = () => {
@@ -83,7 +86,6 @@ const Register: FC<IProps> = ({ navigation }) => {
                 //没注册
                 setIsRegister(false)
                 setCode((value) => !value)
-                setVeriyCode(resCode.data)
                 //成功的话就跳转到登录页面
             } else if (resCode.code === 0) {
                 //注册了跳转到登录页面
@@ -112,8 +114,12 @@ const Register: FC<IProps> = ({ navigation }) => {
         verifyPassword()
         verifyTwicePassword()
         if (isEmail && isPassword && isTwicePassword) {
-            const res = await verifyCodeApi(veriyCode)
-            console.log(res, veriyCode)
+            const param = {
+                code: veriyCode,
+                email,
+                password,
+            }
+            const res = await verifyCodeApi(param)
             if (res.code === 1) {
                 setIsVerifyCode(true)
                 //验证成功跳转到登录页面
@@ -134,13 +140,16 @@ const Register: FC<IProps> = ({ navigation }) => {
         }
     }
     return (
-        <SafeAreaView className="relative" style={{ flex: 1 }}>
+        <ScrollView
+            className="relative"
+            style={{ flex: 1, backgroundColor: 'white' }}
+        >
             <StatusBar backgroundColor={theme.colors.primary}></StatusBar>
             <KeyboardAwareScrollView className="flex-1" style={{ flex: 1 }}>
                 <View
                     style={[
                         {
-                            height: Dimensions.get('screen').height / 2.8,
+                            height: Dimensions.get('screen').height / 3.8,
                         },
                         styles.Background,
                     ]}
@@ -205,7 +214,7 @@ const Register: FC<IProps> = ({ navigation }) => {
                             onBlur={() => verifyPassword()}
                             onChangeText={(value: any) => setPassword(value)}
                             value={password}
-                            secureTextEntry={true}
+                            secureTextEntry={!isSee}
                             containerStyle={{
                                 marginTop: 20,
                             }}
@@ -218,6 +227,7 @@ const Register: FC<IProps> = ({ navigation }) => {
                                     )
                                 }
                             }}
+                            rightIcon={<SeePassWord getIsSee={getIsSee} />}
                         />
                         <Input
                             ref={twicepasswordInput}
@@ -238,7 +248,8 @@ const Register: FC<IProps> = ({ navigation }) => {
                                 setTwicePassword(value)
                             }
                             value={twicePassword}
-                            secureTextEntry={true}
+                            secureTextEntry={!isTwiceSee}
+                            rightIcon={<SeePassWord getIsSee={getIsTwiceSee} />}
                             ErrorComponent={() => {
                                 if (!isTwicePassword) {
                                     return (
@@ -253,6 +264,8 @@ const Register: FC<IProps> = ({ navigation }) => {
                         <View style={styles.Code}>
                             <Input
                                 placeholder="输入验证码"
+                                onChangeText={(value) => setVeriyCode(value)}
+                                value={veriyCode}
                                 leftIcon={
                                     <Icon
                                         name={'code'}
@@ -265,8 +278,8 @@ const Register: FC<IProps> = ({ navigation }) => {
                                 }
                                 containerStyle={{
                                     marginTop: 20,
-                                    marginRight: 30,
-                                    width: 170,
+                                    marginRight: 10,
+                                    width: Dimensions.get('screen').width / 1.7,
                                 }}
                                 ErrorComponent={() => {
                                     if (!isVerifyCode) {
@@ -319,7 +332,7 @@ const Register: FC<IProps> = ({ navigation }) => {
                                 paddingVertical: 10,
                             }}
                             containerStyle={{
-                                width: 200,
+                                width: Dimensions.get('screen').width / 2.5,
                                 borderRadius: 30,
                                 marginVertical: 20,
                             }}
@@ -331,7 +344,7 @@ const Register: FC<IProps> = ({ navigation }) => {
                     </View>
                 </View>
             </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -342,8 +355,6 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingHorizontal: 30,
         flex: 1,
-        height: Dimensions.get('screen').height / 1.73,
-        backgroundColor: 'white',
         width: '100%',
     },
     LoginText: {

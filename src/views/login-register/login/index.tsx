@@ -26,6 +26,7 @@ import {
     KeyboardAwareScrollView,
     KeyboardAwareSectionList,
 } from 'react-native-keyboard-aware-scroll-view'
+import SeePassWord from '../component/see-password'
 interface IProps {
     children?: ReactNode
     navigation: any
@@ -36,20 +37,13 @@ const Login: FC<IProps> = ({ navigation }) => {
     const [password, setPassword] = useState('')
     const [isEmail, setIsEmail] = useState(true)
     const [isPassWord, setIsPassWord] = useState(true)
+    const [isSee, setIsSee] = useState<boolean>()
     const emailInput = useRef<any>()
     const passwordInput = useRef<any>()
     const dispatch = useAppDispatch()
-    const { userInfo } = useAppSelector((state) => {
-        if (state.LoginRegisterSlice.userInfo.id) {
-            return {
-                userInfo: state.LoginRegisterSlice.userInfo,
-            }
-        } else {
-            return {
-                userInfo: undefined,
-            }
-        }
-    }, shallowEqual)
+    const getIsSee = (value: boolean) => {
+        setIsSee(value)
+    }
     //校验邮箱是否正确
     const verifyEmailRule = () => {
         setIsEmail(verifyEmail(email))
@@ -72,6 +66,7 @@ const Login: FC<IProps> = ({ navigation }) => {
             }
             try {
                 const res = await LoginApi(param)
+                console.log(res.data)
                 if (res.code === 1) {
                     navigation.dispatch(StackActions.replace('tabs'))
                     dispatch(changeUserInfoAction(res.data.user))
@@ -92,7 +87,10 @@ const Login: FC<IProps> = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView>
+        <ScrollView
+            className="bg-white"
+            style={{ height: Dimensions.get('screen').height }}
+        >
             <StatusBar backgroundColor={theme.colors.primary}></StatusBar>
             <KeyboardAwareScrollView>
                 <View
@@ -137,7 +135,9 @@ const Login: FC<IProps> = ({ navigation }) => {
                                 />
                             }
                             onBlur={() => verifyEmailRule()}
-                            onChangeText={(value: any) => setEmail(value)}
+                            onChangeText={(value: any) => {
+                                setEmail(value)
+                            }}
                             value={email}
                             ErrorComponent={() => {
                                 if (!isEmail) {
@@ -174,10 +174,11 @@ const Login: FC<IProps> = ({ navigation }) => {
                                     }}
                                 />
                             }
+                            rightIcon={<SeePassWord getIsSee={getIsSee} />}
                             containerStyle={{
                                 marginTop: 25,
                             }}
-                            secureTextEntry={true}
+                            secureTextEntry={!isSee}
                         />
                     </View>
                     <View className="" style={styles.LoginButton}>
@@ -198,7 +199,7 @@ const Login: FC<IProps> = ({ navigation }) => {
                                 paddingVertical: 10,
                             }}
                             containerStyle={{
-                                width: 200,
+                                width: Dimensions.get('screen').width / 2.5,
                                 borderRadius: 30,
                                 marginVertical: 20,
                             }}
@@ -211,15 +212,13 @@ const Login: FC<IProps> = ({ navigation }) => {
                     </View>
                 </View>
             </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
     Bottom: {
         paddingVertical: 20,
         paddingHorizontal: 30,
-        height: Dimensions.get('window').height / 2,
-        backgroundColor: 'white',
         width: '100%',
     },
     LoginText: {

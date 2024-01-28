@@ -1,64 +1,87 @@
-import React, { memo, useState } from 'react'
+import React, {
+    forwardRef,
+    memo,
+    useEffect,
+    useImperativeHandle,
+    useState,
+} from 'react'
 import type { FC, ReactNode } from 'react'
-import { Text, View } from 'react-native'
+import { Alert, View } from 'react-native'
 import SexPicker from './sex-picker'
 import DatePicker from './date-picker'
 import HighPicker from './high-picker'
-import { Button } from '@rneui/themed'
-import SlidePicker from 'react-native-slidepicker'
+import { useAppDispatch, useAppSelector } from '../../../../store'
+import { shallowEqual } from 'react-redux'
+import HabitPicker from './habit-picker'
+import { getUserInfo, updateUserProfile } from '../../../../apis/mine'
+import { changeUserProfileAction } from '../../../../store/slice/login-register-slice'
 
 interface IProps {
     children?: ReactNode
 }
 
-const BodyContent: FC<IProps> = () => {
-    const [isShow, setIsShow] = useState(false)
-    const dataSource = [
-        [
-            { label: 'type A', value: 0 },
-            { label: 'type B', value: 1 },
-            { label: 'type C', value: 2 },
-            { label: 'type D', value: 3 },
-        ],
-        [
-            { label: 'red', value: 0 },
-            { label: 'yellow', value: 1 },
-            { label: 'blue', value: 2 },
-            { label: 'green', value: 3 },
-            { label: 'gray', value: 4 },
-        ],
-        [
-            { label: 33, value: 33 },
-            { label: 34, value: 34 },
-            { label: 35, value: 35 },
-            { label: 36, value: 36 },
-            { label: 37, value: 37 },
-            { label: 38, value: 38 },
-            { label: 39, value: 39 },
-            { label: 40, value: 40 },
-            { label: 41, value: 41 },
-            { label: 42, value: 42 },
-            { label: 43, value: 43 },
-            { label: 44, value: 44 },
-        ],
-    ]
+const BodyContent = (props: any, ref: any) => {
+    const { profile, userInfo } = useAppSelector((state) => {
+        return {
+            profile: state.LoginRegisterSlice.profile,
+            userInfo: state.LoginRegisterSlice.userInfo,
+        }
+    }, shallowEqual)
+    const { id } = userInfo
+    const dispatch = useAppDispatch()
+    const { height, weight, birth, sex, habit } = profile
+    const [Sex, setSex] = useState('')
+    const [Birth, setBirth] = useState('')
+    const [Height, setHeight] = useState('')
+    const [Weight, setWeight] = useState('')
+    const [Habit, setHabit] = useState('')
+    //获取到填写的数据
+    const updateProfile = async () => {
+        const param = {
+            sex: Number(Sex),
+            birth: Birth,
+            height: Height,
+            weight: Weight,
+            habit: Habit,
+            id,
+        }
+        const res = await updateUserProfile(param)
+        console.log(res)
+        if (res.code === 1) {
+            Alert.alert('更新成功')
+            //获取用户信息
+            const userInfo = await getUserInfo(id)
+            //放到profile中
+            dispatch(changeUserProfileAction(userInfo.data))
+        }
+    }
+    //传递给父组件的方法
+    useImperativeHandle(ref, () => {
+        return {
+            updateProfile,
+        }
+    })
     return (
         <View>
-            <SexPicker></SexPicker>
-            <DatePicker></DatePicker>
-            <Button title={'显示'} onPress={() => setIsShow(true)}></Button>
-            <HighPicker isShow={isShow}></HighPicker>
-            <Button title={'123'}></Button>
-            <SlidePicker.Parallel
-                visible={isShow}
-                wheels={3}
-                dataSource={dataSource}
-                values={[]}
-                onCancelClick={() => console.log('cancel')}
-                onConfirmClick={(res: any) => console.log(res)}
-            />
+            <SexPicker sex={sex} setSex={setSex}></SexPicker>
+            <DatePicker birth={birth} setBirth={setBirth}></DatePicker>
+            <HighPicker
+                title={'身高'}
+                modelTitle={'修改身高'}
+                inputContent={'填写身高'}
+                content={height}
+                setValue={setHeight}
+            ></HighPicker>
+            <HighPicker
+                title={'体重'}
+                modelTitle={'修改体重'}
+                inputContent={'填写体重'}
+                content={weight}
+                setValue={setWeight}
+            ></HighPicker>
+            <HabitPicker habit={habit} setHabit={setHabit}></HabitPicker>
         </View>
     )
 }
 
-export default memo(BodyContent)
+export default forwardRef(BodyContent)

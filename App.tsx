@@ -7,19 +7,15 @@ import { Icon } from '@rneui/themed'
 import { MineOtherScreen } from './src/data/app-path'
 import { Provider } from 'react-redux'
 import store, { persistor } from './src/store'
-import { Text } from 'react-native'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import theme from "./src/styles/theme/color";
+import UserAgree from './src/views/mine/profile/c-pages/user-agree'
 
 export default function App() {
     const Stack = createStackNavigator()
     useEffect(() => {}, [])
     return (
         <Provider store={store}>
-            <PersistGate
-                persistor={persistor}
-                loading={<Text>Loading...</Text>}
-            >
+            <PersistGate persistor={persistor} loading={null}>
                 <NavigationContainer>
                     <Stack.Navigator
                         initialRouteName={'LoginRegisterHomeScreen'}
@@ -28,7 +24,7 @@ export default function App() {
                             name={'LoginRegisterHomeScreen'}
                             component={LoginRegisterHomeScreen}
                             options={{
-                                headerShown:false
+                                headerShown: false,
                             }}
                         ></Stack.Screen>
                         <Stack.Screen
@@ -59,6 +55,21 @@ export default function App() {
                                 ></Stack.Screen>
                             )
                         })}
+                        <Stack.Screen
+                            name={'userAgreeScreen'}
+                            component={UserAgree}
+                            options={{
+                                headerShadowVisible: false,
+                                headerTitleAlign: 'center',
+                                headerTitle: '用户协议',
+                                headerBackImage: () => (
+                                    <Icon
+                                        name={'left'}
+                                        type={'antdesign'}
+                                    ></Icon>
+                                ),
+                            }}
+                        ></Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>
