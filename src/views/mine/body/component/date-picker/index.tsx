@@ -17,20 +17,26 @@ const DatePicker: FC<IProps> = ({ birth, setBirth }) => {
     const [show, setShow] = useState(false)
     const [currentDate, setCurrentDate] = useState('')
     const onChange = (event: any, selectedDate: any) => {
-        setShow(false)
-        setDate(selectedDate)
-        setBirth(moment(selectedDate).format('YYYY-MM-DD'))
-        setCurrentDate(moment(selectedDate).format('YYYY-MM-DD'))
+        if (event.type === 'dismissed') {
+            setShow(false)
+        } else {
+            setShow(false)
+            setBirth(moment(selectedDate).format('YYYY-MM-DD'))
+            setCurrentDate(moment(selectedDate).format('YYYY-MM-DD'))
+        }
     }
 
-    const showMode = (currentMode: string) => {
-        setShow(true)
-        setMode(currentMode)
-    }
-    //刚开始的时间
+    //刚开始的生日日期
     useEffect(() => {
-        setBirth(moment(date).format('YYYY-MM-DD'))
+        if (birth) {
+            setCurrentDate(birth.join('-'))
+        } else {
+            setBirth(moment(date).format('YYYY-MM-DD'))
+        }
     }, [])
+    useEffect(() => {
+        setBirth(currentDate)
+    }, [currentDate])
     return (
         <TouchableOpacity
             className="flex-row items-center border-[#F1F3F4] border-b"
@@ -46,10 +52,8 @@ const DatePicker: FC<IProps> = ({ birth, setBirth }) => {
             <View className="flex-row items-center">
                 <Text style={{ fontSize: 15, fontWeight: '300' }}>
                     {currentDate
-                        ? String(moment(date).format('YYYY-MM-DD'))
-                        : !birth
-                          ? ''
-                          : birth.join('-')}
+                        ? currentDate
+                        : String(moment(date).format('YYYY-MM-DD'))}
                 </Text>
                 <Icon
                     type={'antdesign'}

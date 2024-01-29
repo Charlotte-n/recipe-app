@@ -12,7 +12,7 @@ const MyImagePicker = () => {
             userInfo: state.LoginRegisterSlice.userInfo,
         }
     }, shallowEqual)
-    const { id } = userInfo
+    const { id, avatar } = userInfo
     //获取相机权限
     useEffect(() => {
         ;(async () => {
@@ -41,14 +41,12 @@ const MyImagePicker = () => {
             setImage((prevState: any) => {
                 return result.current.assets[0].uri as string
             })
-            //进行更改用户信息
         }
     }
     //上传头像
     const uploadImage = async () => {
         console.log('我是image', image)
         if (!image) {
-            console.log(image)
             alert('请先选择图片')
             return
         }
@@ -58,13 +56,11 @@ const MyImagePicker = () => {
             name: 'avatar.jpeg',
             type: 'image/jpeg',
         })
-        const res = await uploadAvatar(formData, id)
-        console.log(formData, id)
-        console.log(res)
+        //上传图片
+        await uploadAvatar(formData, id)
     }
     useEffect(() => {
         if (!isInitialRender) {
-            console.log('最新的 image:', image)
             // 进行其他操作...
             uploadImage()
                 .then((res) => {
@@ -80,11 +76,11 @@ const MyImagePicker = () => {
 
     return (
         <View>
-            {image ? (
+            {avatar ? (
                 <TouchableOpacity onPress={() => pickImage()}>
                     <Image
                         className="rounded-full"
-                        source={{ uri: image }}
+                        source={{ uri: avatar }}
                         style={{ width: 100, height: 100 }}
                     />
                 </TouchableOpacity>

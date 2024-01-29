@@ -8,13 +8,11 @@ import {
     Alert,
     Dimensions,
     StatusBar,
-    Platform,
 } from 'react-native'
 import { verifyEmail } from '../../../utils/verify-email'
 import CountDown from '../../../components/count-down'
 import theme from '../../../styles/theme/color'
 import { getCodeApi, verifyCodeApi } from '../../../apis/mine'
-import SafeAreaView from 'react-native-safe-area-view'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SeePassWord from '../component/see-password'
 
@@ -279,7 +277,7 @@ const Register: FC<IProps> = ({ navigation }) => {
                                 containerStyle={{
                                     marginTop: 20,
                                     marginRight: 10,
-                                    width: Dimensions.get('screen').width / 1.7,
+                                    width: Dimensions.get('screen').width / 2,
                                 }}
                                 ErrorComponent={() => {
                                     if (!isVerifyCode) {

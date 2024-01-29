@@ -1,11 +1,5 @@
-import React, {
-    forwardRef,
-    memo,
-    useEffect,
-    useImperativeHandle,
-    useState,
-} from 'react'
-import type { FC, ReactNode } from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import type { ReactNode } from 'react'
 import { Alert, View } from 'react-native'
 import SexPicker from './sex-picker'
 import DatePicker from './date-picker'
@@ -15,10 +9,6 @@ import { shallowEqual } from 'react-redux'
 import HabitPicker from './habit-picker'
 import { getUserInfo, updateUserProfile } from '../../../../apis/mine'
 import { changeUserProfileAction } from '../../../../store/slice/login-register-slice'
-
-interface IProps {
-    children?: ReactNode
-}
 
 const BodyContent = (props: any, ref: any) => {
     const { profile, userInfo } = useAppSelector((state) => {
@@ -46,7 +36,6 @@ const BodyContent = (props: any, ref: any) => {
             id,
         }
         const res = await updateUserProfile(param)
-        console.log(res)
         if (res.code === 1) {
             Alert.alert('更新成功')
             //获取用户信息

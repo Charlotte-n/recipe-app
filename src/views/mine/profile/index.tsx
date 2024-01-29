@@ -1,19 +1,17 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
 import ProfileFlatList from './component/content-item'
 import MyImagePicker from '../../../components/image-picker'
 import MyBottomSheet from '../../../components/bottom-sheet'
 import { ScrollView } from 'nativewind/dist/preflight'
 import { useAppSelector } from '../../../store'
 import { shallowEqual } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
 interface IProps {
     children?: ReactNode
 }
 
 const Profile: FC<IProps> = () => {
-    const navigation: any = useNavigation()
     const { userInfo } = useAppSelector((state) => {
         return {
             userInfo: state.LoginRegisterSlice.userInfo,
@@ -27,18 +25,26 @@ const Profile: FC<IProps> = () => {
         switch (id) {
             case '0':
                 return (
-                    <MyBottomSheet id={id} isVisible={isVisible}>
+                    <MyBottomSheet
+                        id={id}
+                        isVisible={isVisible}
+                        contentValue={userInfo.username}
+                    >
                         {{
                             content: '修改用户名',
                             cancel: () => setIsVisible(false),
-                            placeholderContent: userInfo.username,
+                            placeholderContent: '请填写用户名',
                         }}
                     </MyBottomSheet>
                 )
             case '1':
                 return (
                     // 增加判断是否要解除绑定手机号
-                    <MyBottomSheet id={id} isVisible={isVisible}>
+                    <MyBottomSheet
+                        id={id}
+                        isVisible={isVisible}
+                        contentValue={'13383024736'}
+                    >
                         {{
                             content: '绑定手机号',
                             cancel: () => setIsVisible(false),
@@ -48,7 +54,11 @@ const Profile: FC<IProps> = () => {
                 )
             case '2':
                 return (
-                    <MyBottomSheet id={id} isVisible={isVisible}>
+                    <MyBottomSheet
+                        id={id}
+                        isVisible={isVisible}
+                        contentValue={'3495314473@qq.com'}
+                    >
                         {{
                             content: '绑定邮箱',
                             cancel: () => setIsVisible(false),
@@ -58,9 +68,6 @@ const Profile: FC<IProps> = () => {
                 )
         }
     }
-    useEffect(() => {
-        console.log(Id)
-    }, [Id])
     return (
         <ScrollView
             style={{ height: height }}

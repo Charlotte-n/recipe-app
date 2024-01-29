@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
-import type { FC, ReactNode } from 'react'
+import React, { memo, useEffect, useState } from 'react'
+import type { FC } from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { Icon } from '@rneui/themed'
 import { useAppSelector } from '../../../../store'
@@ -96,7 +96,6 @@ const ProfileFlatList: FC<IProps> = ({ getId, children }) => {
         )
     }
     useEffect(() => {
-        console.log(Id)
         if (Id === '3') {
             //@ts-ignore
             navigation.navigate('userAgreeScreen')

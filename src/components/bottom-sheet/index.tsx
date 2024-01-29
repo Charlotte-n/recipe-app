@@ -13,9 +13,15 @@ interface IProps {
     children?: any
     id: string
     isVisible: boolean
+    contentValue: string
 }
 
-const MyBottomSheet: FC<IProps> = ({ children, id, isVisible }) => {
+const MyBottomSheet: FC<IProps> = ({
+    children,
+    id,
+    isVisible,
+    contentValue,
+}) => {
     const { content, cancel, placeholderContent } = children
     const [value, setValue] = useState('')
     const { userInfo } = useAppSelector((state) => {
@@ -41,6 +47,9 @@ const MyBottomSheet: FC<IProps> = ({ children, id, isVisible }) => {
                 console.log('出错了', error)
             })
     }
+    useEffect(() => {
+        setValue(contentValue)
+    }, [contentValue])
     return (
         <View>
             <BottomSheet isVisible={isVisible}>
@@ -62,6 +71,7 @@ const MyBottomSheet: FC<IProps> = ({ children, id, isVisible }) => {
                     <TextInput
                         className="border-[1] p-2"
                         placeholder={placeholderContent}
+                        value={value}
                         style={{
                             borderWidth: 1,
                             borderColor: '#BFBFBF',
@@ -70,7 +80,11 @@ const MyBottomSheet: FC<IProps> = ({ children, id, isVisible }) => {
                     ></TextInput>
                 </Card>
                 <Button
-                    onPress={() => updateUsername()}
+                    onPress={() => {
+                        if (id === '0') {
+                            updateUsername()
+                        }
+                    }}
                     title={'确定'}
                     color={theme.colors.deep01Primary}
                 ></Button>

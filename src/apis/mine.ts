@@ -76,9 +76,7 @@ interface uploadAvatarParamType {
 export const uploadAvatar = (param: uploadAvatarParamType, id: number) => {
     return hyRequest.post({
         url: URL.UPLOADAVATAR + '/' + id,
-        data: {
-            image: param.image,
-        },
+        data: param,
         headers: {
             'Content-Type': 'multipart/form-data',
         },

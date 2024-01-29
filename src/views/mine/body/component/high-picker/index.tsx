@@ -24,7 +24,7 @@ const HighPicker: FC<IProps> = ({
     const [contentValue, setContentValue] = useState('')
     const selected = useRef(content)
     useEffect(() => {
-        console.log(content)
+        // console.log(content)
     }, [])
     const feedBack = () => {
         switch (title) {
