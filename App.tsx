@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import store, { persistor } from './src/store'
 import { PersistGate } from 'redux-persist/es/integration/react'
 import UserAgree from './src/views/mine/profile/c-pages/user-agree'
+import Search from './src/views/diet/search'
 
 export default function App() {
     const Stack = createStackNavigator()
@@ -17,9 +18,7 @@ export default function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
                 <NavigationContainer>
-                    <Stack.Navigator
-                        initialRouteName={'LoginRegisterHomeScreen'}
-                    >
+                    <Stack.Navigator initialRouteName={'tabs'}>
                         <Stack.Screen
                             name={'LoginRegisterHomeScreen'}
                             component={LoginRegisterHomeScreen}
@@ -62,6 +61,21 @@ export default function App() {
                                 headerShadowVisible: false,
                                 headerTitleAlign: 'center',
                                 headerTitle: '用户协议',
+                                headerBackImage: () => (
+                                    <Icon
+                                        name={'left'}
+                                        type={'antdesign'}
+                                    ></Icon>
+                                ),
+                            }}
+                        ></Stack.Screen>
+                        {/*    饮食页面*/}
+                        <Stack.Screen
+                            name={'search'}
+                            component={Search}
+                            options={{
+                                headerTitle: '搜索',
+                                headerTitleAlign: 'center',
                                 headerBackImage: () => (
                                     <Icon
                                         name={'left'}

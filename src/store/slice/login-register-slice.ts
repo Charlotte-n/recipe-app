@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../../apis/types/mine'
+import type { User } from '../../apis/types/mine'
 
 interface initialState {
     userInfo: User

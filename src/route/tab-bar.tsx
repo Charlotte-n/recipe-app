@@ -19,7 +19,7 @@ const TabBar: FC<IProps> = () => {
             screenOptions={{
                 headerShadowVisible: false,
             }}
-            initialRouteName={'MineScreen'}
+            initialRouteName={'DietScreen'}
         >
             <Tab.Screen
                 name={'HomeScreen'}
@@ -57,6 +57,7 @@ const TabBar: FC<IProps> = () => {
                             <Icon name={'slightly-smile'} type={'fontisto'} />
                         )
                     },
+                    headerShown: false,
                 }}
             ></Tab.Screen>
             <Tab.Screen

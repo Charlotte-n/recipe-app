@@ -42,6 +42,7 @@ export const useAppDispatch: () => typeof store.dispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<
     ReturnType<typeof store.getState>
 > = useSelector
+export type AppDispatch = typeof store.dispatch
 //导出持久化存储的store和persistor
 export default store
 export const persistor = persistStore(store)
