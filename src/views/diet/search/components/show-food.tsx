@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 import { searchFoodCategory } from '../../../../data/diet'
 import theme from '../../../../styles/theme/color'
-import { flex } from 'nativewind/dist/postcss/to-react-native/properties/flex'
 
 interface IProps {
     children?: ReactNode

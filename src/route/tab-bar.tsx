@@ -57,7 +57,7 @@ const TabBar: FC<IProps> = () => {
                             <Icon name={'slightly-smile'} type={'fontisto'} />
                         )
                     },
-                    headerShown: false,
+                    headerTitle: '',
                 }}
             ></Tab.Screen>
             <Tab.Screen

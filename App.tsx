@@ -10,6 +10,7 @@ import store, { persistor } from './src/store'
 import { PersistGate } from 'redux-persist/es/integration/react'
 import UserAgree from './src/views/mine/profile/c-pages/user-agree'
 import Search from './src/views/diet/search'
+import MyCamera from './src/components/camera'
 
 export default function App() {
     const Stack = createStackNavigator()
@@ -82,6 +83,13 @@ export default function App() {
                                         type={'antdesign'}
                                     ></Icon>
                                 ),
+                            }}
+                        ></Stack.Screen>
+                        <Stack.Screen
+                            name={'camera'}
+                            component={MyCamera}
+                            options={{
+                                headerShown: false,
                             }}
                         ></Stack.Screen>
                     </Stack.Navigator>

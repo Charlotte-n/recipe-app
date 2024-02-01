@@ -6,6 +6,7 @@ import theme from '../../../styles/theme/color'
 import { useNavigation } from '@react-navigation/native'
 import MyImagePicker from '../../../components/image-picker'
 import { getSearchImage } from '../../../utils/uploadImg'
+import MyCamera from '../../../components/camera'
 
 interface IProps {
     children?: ReactNode
@@ -19,6 +20,10 @@ const SearchFilter: FC<IProps> = ({ type }) => {
         setSearch('')
     }
     //获取到图片
+    const gotoCamera = () => {
+        //@ts-ignore
+        navigation.navigate('camera')
+    }
 
     return (
         <View
@@ -70,19 +75,17 @@ const SearchFilter: FC<IProps> = ({ type }) => {
                 </TouchableOpacity>
             )}
             {type === 'search' && search === '' ? (
-                <TouchableOpacity>
-                    <MyImagePicker getImage={getSearchImage}>
-                        {{
-                            content: (
-                                <Icon
-                                    name={'camera'}
-                                    type={'entypo'}
-                                    color={theme.colors.deep01Primary}
-                                    size={20}
-                                ></Icon>
-                            ),
-                        }}
-                    </MyImagePicker>
+                <TouchableOpacity
+                    onPress={() => {
+                        gotoCamera()
+                    }}
+                >
+                    <Icon
+                        name={'camera'}
+                        type={'entypo'}
+                        color={theme.colors.deep01Primary}
+                        size={20}
+                    ></Icon>
                 </TouchableOpacity>
             ) : null}
         </View>

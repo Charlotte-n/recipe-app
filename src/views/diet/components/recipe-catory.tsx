@@ -1,30 +1,44 @@
 import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
-import { Text, useWindowDimensions, View } from 'react-native'
-import ScrollableTabView, {
-    DefaultTabBar,
-    //@ts-ignore
-} from 'react-native-scrollable-tab-view'
+import {
+    Dimensions,
+    FlatList,
+    Image,
+    Text,
+    TouchableOpacity,
+    useWindowDimensions,
+    View,
+} from 'react-native'
+import { FoodCategory } from '../../../data/diet'
 interface IProps {
     children?: ReactNode
 }
 
 const RecipeCategory: FC<IProps> = () => {
+    const Item = ({ image, name }: any) => {
+        return (
+            <TouchableOpacity
+                style={{
+                    width: Dimensions.get('screen').width / 5,
+                }}
+                className="flex-col justify-center"
+            >
+                {image}
+                <Text style={{ fontSize: 13 }}>{name}</Text>
+            </TouchableOpacity>
+        )
+    }
     return (
-        <ScrollableTabView
-            style={{ marginTop: 20 }}
-            initialPage={1}
-            renderTabBar={() => <DefaultTabBar />}
-        >
-            {/*@ts-ignore*/}
-            <Text tabLabel="Tab #1">My</Text>
-            {/*@ts-ignore*/}
-
-            <Text tabLabel="Tab #2">favorite</Text>
-            {/*@ts-ignore*/}
-
-            <Text tabLabel="Tab #3">project</Text>
-        </ScrollableTabView>
+        <View className="flex-row">
+            <FlatList
+                data={FoodCategory}
+                renderItem={({ item }) => (
+                    <Item image={item.icon} name={item.name} />
+                )}
+                horizontal={true}
+                keyExtractor={(item) => String(item.id)}
+            ></FlatList>
+        </View>
     )
 }
 

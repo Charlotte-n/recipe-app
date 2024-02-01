@@ -4286,6 +4286,13 @@ expo-asset@~9.0.2:
     invariant "^2.2.4"
     md5-file "^3.2.3"
 
+expo-camera@~14.0.3:
+  version "14.0.3"
+  resolved "https://r.cnpmjs.org/expo-camera/-/expo-camera-14.0.3.tgz#bb4ce3ba35ce2a356f4d16bb50cb235e7e8e2ac1"
+  integrity sha512-AKeV6wHfAf2U8b/9IzevXY/F86ydHZkA+pf/G7fzBRh8F//ACDmSuqG63aRQbm5o+CA4AxG4xD+iUDTwrl//rg==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-constants@~15.4.0:
   version "15.4.5"
   resolved "https://r.cnpmjs.org/expo-constants/-/expo-constants-15.4.5.tgz#81756a4c4e1c020f840a419cd86a124a6d1fb35b"
@@ -4310,6 +4317,13 @@ expo-image-loader@~4.6.0:
   resolved "https://r.cnpmjs.org/expo-image-loader/-/expo-image-loader-4.6.0.tgz#ca7d4fdf53125bff2091d3a2c34a3155f10df147"
   integrity sha512-RHQTDak7/KyhWUxikn2yNzXL7i2cs16cMp6gEAgkHOjVhoCJQoOJ0Ljrt4cKQ3IowxgCuOrAgSUzGkqs7omj8Q==
 
+expo-image-manipulator@~11.8.0:
+  version "11.8.0"
+  resolved "https://r.cnpmjs.org/expo-image-manipulator/-/expo-image-manipulator-11.8.0.tgz#e52351728619e534c949ae4b394af2c7c5d16702"
+  integrity sha512-ZWVrHnYmwJq6h7auk+ropsxcNi+LyZcPFKQc8oy+JA0SaJosfShvkCm7RADWAunHmfPCmjHrhwPGEu/rs7WG/A==
+  dependencies:
+    expo-image-loader "~4.6.0"
+
 expo-image-picker@~14.7.1:
   version "14.7.1"
   resolved "https://r.cnpmjs.org/expo-image-picker/-/expo-image-picker-14.7.1.tgz#c51faff3a3fbffc6ae93d7155370beb1a2d2baea"
@@ -4321,6 +4335,11 @@ expo-keep-awake@~12.8.2:
   version "12.8.2"
   resolved "https://r.cnpmjs.org/expo-keep-awake/-/expo-keep-awake-12.8.2.tgz#6cfdf8ad02b5fa130f99d4a1eb98e459d5b4332e"
   integrity sha512-uiQdGbSX24Pt8nGbnmBtrKq6xL/Tm3+DuDRGBk/3ZE/HlizzNosGRIufIMJ/4B4FRw4dw8KU81h2RLuTjbay6g==
+
+expo-location@~16.5.2:
+  version "16.5.2"
+  resolved "https://r.cnpmjs.org/expo-location/-/expo-location-16.5.2.tgz#ca0c9490b193c64fc434413db61f3ec5b112a23e"
+  integrity sha512-i+Ps8ADohd+YJtWqH1eOfzWZdRJOhNEX1E3TcUoGbhO+wcIq5DKJz3r1CrnJDlaM9yy2QuFmvvxruHatQPi42w==
 
 expo-modules-autolinking@1.10.2:
   version "1.10.2"
@@ -7186,6 +7205,11 @@ react-native-slidepicker@^2.0.2:
   version "2.0.2"
   resolved "https://r.cnpmjs.org/react-native-slidepicker/-/react-native-slidepicker-2.0.2.tgz#47f4cbe49e15e31216eefb624d08903d7d3809fb"
   integrity sha512-hcOtyhZM5mfTlqI622+JKPu7f1FT5JXj6DeQtfYaAMJgqAn/DQn0kEf/WR9rO93HiU8/lI/hoYD/k8k5QQzSQg==
+
+react-native-virtualized-view@^1.0.0:
+  version "1.0.0"
+  resolved "https://r.cnpmjs.org/react-native-virtualized-view/-/react-native-virtualized-view-1.0.0.tgz#fd2129f1309d1ff4b9e869d5050e803640ca64c5"
+  integrity sha512-7YyFMMkNzJ787/giGkKcm0JEx0IcLEE/XHREGz2I4K1RISQGFjEDe6iWsapOnHSR/e1vhebZJ8VmqhSpg5YPzg==
 
 react-native@*, react-native@0.73.2:
   version "0.73.2"
